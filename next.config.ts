@@ -10,12 +10,6 @@ const nextConfig: NextConfig = {
         hostname: "*.supabase.co",
         pathname: "/storage/v1/object/public/**",
       },
-      // Placeholder seed data (diganti foto asli client nanti).
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-        pathname: "/**",
-      },
     ],
   },
 };

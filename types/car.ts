@@ -6,6 +6,20 @@
 
 export type CarStatus = "available" | "sold" | "reserved";
 
+// Satu pilihan warna mobil beserta galeri gambarnya sendiri.
+// is_default menandakan warna yang tampil pertama saat detail dibuka.
+export interface CarColor {
+  id: string;
+  car_id: string;
+  name: string;
+  /** Format HEX 6 digit, contoh "#c8102e". Dipakai swatch & aksesibilitas. */
+  hex: string;
+  gallery_urls: string[];
+  is_default: boolean;
+  sort_order: number;
+  created_at: string;
+}
+
 export interface Car {
   id: string;
   slug: string;
@@ -31,4 +45,6 @@ export interface Car {
   gallery_urls: string[];
   created_at: string;
   updated_at: string;
+  /** Daftar warna + galeri per warna (join dari car_colors). */
+  colors: CarColor[];
 }

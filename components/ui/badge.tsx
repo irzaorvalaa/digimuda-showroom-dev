@@ -3,12 +3,13 @@ import type { CarStatus } from "@/types/car";
 
 interface BadgeProps {
   status: CarStatus;
+  /** solid = di atas cream/putih; overlay = di atas gambar (liquid glass) */
+  variant?: "solid" | "overlay";
   className?: string;
 }
 
-// Badge status berdiri sendiri (untuk halaman katalog/detail).
-// available = emerald + pulse sesuai palet; versi overlay di car-card
-// sengaja terpisah karena butuh latar putih di atas gambar.
+// Badge status berdiri sendiri (katalog/detail). available = emerald + pulse
+// sesuai palet. Overlay memakai inner border + inner highlight (SKILL.md §4).
 const statusConfig: Record<
   CarStatus,
   { label: string; dot: string; text: string }
@@ -22,13 +23,21 @@ const statusConfig: Record<
   sold: { label: "Sold", dot: "bg-zinc-400", text: "text-zinc-600" },
 };
 
-export default function Badge({ status, className }: BadgeProps) {
+export default function Badge({
+  status,
+  variant = "solid",
+  className,
+}: BadgeProps) {
   const config = statusConfig[status];
 
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border border-stone-200/60 bg-white px-3 py-1.5 text-xs font-medium",
+        "inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium",
+        variant === "solid" && "border border-stone-200/60 bg-white",
+        // Liquid glass refraction: inner border + highlight tepi atas
+        variant === "overlay" &&
+          "border border-white/10 bg-white/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] backdrop-blur-md",
         className
       )}
     >

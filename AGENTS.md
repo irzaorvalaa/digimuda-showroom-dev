@@ -240,6 +240,7 @@ migrations/
 0002_rls_policies.sql # RLS untuk semua tabel
 0003_indexes.sql # Index tambahan
 0004_storage.sql # Bucket + policy storage
+0005_car_colors.sql # Tabel car_colors (warna + galeri per warna) + RLS + index
 seed.sql # Data dummy untuk local + staging
 
 middleware.ts # Refresh Supabase session (hanya rute admin/auth)
@@ -334,16 +335,31 @@ select exists (select 1 from admins where user_id = auth.uid());
 $$
 ;
 
+-- Tabel car_colors (0005_car_colors.sql)
+-- Satu mobil bisa punya beberapa warna; tiap warna punya galeri sendiri.
+create table car_colors (
+  id uuid primary key default gen_random_uuid(),
+  car_id uuid not null references cars(id) on delete cascade,
+  name text not null,
+  hex text not null, -- format "#c8102e"
+  gallery_urls text[] not null default '{}',
+  is_default boolean not null default false,
+  sort_order int not null default 0,
+  created_at timestamptz not null default now()
+);
+
 -- Index (0003_indexes.sql)
 create index idx_cars_status on cars(status);
 create index idx_cars_featured on cars(is_featured) where is_featured = true;
 create index idx_cars_brand on cars(brand_id);
 create index idx_inquiries_status on inquiries(status);
+create index idx_car_colors_car on car_colors(car_id, sort_order);
 
 RLS POLICIES (WAJIB, semua tabel enable row level security):
 * brands : SELECT public. INSERT/UPDATE/DELETE hanya is_admin().
 * cars : SELECT public untuk SEMUA status (available, sold, reserved). Filter status dilakukan di query. INSERT/UPDATE/DELETE hanya is_admin().
 * inquiries: INSERT public (siapa saja boleh kirim). SELECT/UPDATE hanya is_admin().
+* car_colors: SELECT public. INSERT/UPDATE/DELETE hanya is_admin().
 * admins : tidak ada policy publik (hanya dibaca lewat fungsi is_admin()).
 * Storage : bucket "cars" dan "brand-logos" public read; upload/update/delete hanya is_admin() (tulis di 0004_storage.sql).
 * Di supabase/config.toml, matikan public sign-up (enable_signup = false). Admin dibuat manual lewat dashboard, lalu ditambahkan ke tabel admins. "authenticated" saja TIDAK cukup untuk hak tulis.

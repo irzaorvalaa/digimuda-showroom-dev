@@ -1,8 +1,9 @@
 -- seed.sql — data dummy realistis untuk LOCAL + STAGING.
 -- DILARANG dijalankan di production (data asli dari client).
 -- Idempotent: aman dijalankan ulang (on conflict do nothing).
--- Gambar pakai picsum.photos/seed/... — nanti diganti URL Supabase Storage
--- setelah admin upload foto asli ke bucket "cars".
+-- SEMENTARA: gambar memakai foto lokal di public/images/cars/ (path root-relatif,
+-- dioptimasi otomatis oleh next/image). Ganti dengan foto Supabase Storage
+-- setelah admin mengunggah foto asli ke bucket "cars".
 
 -- ============ BRANDS ============
 insert into brands (name, slug) values
@@ -31,8 +32,8 @@ insert into cars (
     '8-Speed Dual-Clutch', 'All-Wheel Drive', 'British Racing Green', 'Burnt Oak / Linen', 7420,
     'Full main dealer history in Jakarta, ceramic-coated since new. Rear-seat entertainment and the Naim audio system are intact; tires replaced at 6.800 km.',
     true,
-    'https://picsum.photos/seed/bentley-gt-speed-front/800/600',
-    array['https://picsum.photos/seed/bentley-gt-speed-side/800/600', 'https://picsum.photos/seed/bentley-gt-speed-interior/800/600']
+    '/images/cars/6.jpg',
+    array['/images/cars/6.jpg', '/images/cars/41.jpg', '/images/cars/48.jpg']
   ),
   (
     'mercedes-amg-gt-63-s-4matic-2023',
@@ -43,8 +44,8 @@ insert into cars (
     'AMG SPEEDSHIFT MCT 9-Speed', 'All-Wheel Drive', 'Selenite Grey', 'Nappa Leather Black', 4180,
     'AMG Driver A package and rear-axle steering optioned from the factory. One owner, service done at Sunter authorized workshop.',
     true,
-    'https://picsum.photos/seed/amg-gt63s-front/800/600',
-    array['https://picsum.photos/seed/amg-gt63s-rear/800/600', 'https://picsum.photos/seed/amg-gt63s-cockpit/800/600']
+    '/images/cars/27.jpg',
+    array['/images/cars/27.jpg', '/images/cars/6.jpg', '/images/cars/38.jpg']
   ),
   (
     'bmw-m4-competition-xdrive-2023',
@@ -55,8 +56,8 @@ insert into cars (
     '8-Speed M Steptronic', 'M xDrive', 'Brooklyn Grey', 'Merino Leather Black', 11250,
     'M Driver''s Package and carbon bucket seats. Front PPF still on, two sets of keys and original run-flat plus a spare wheel set included.',
     true,
-    'https://picsum.photos/seed/bmw-m4-competition-front/800/600',
-    array['https://picsum.photos/seed/bmw-m4-competition-side/800/600', 'https://picsum.photos/seed/bmw-m4-seats/800/600']
+    '/images/cars/30.jpg',
+    array['/images/cars/30.jpg', '/images/cars/46.jpg', '/images/cars/41.jpg']
   ),
   (
     'porsche-911-carrera-s-cabriolet-992-2022',
@@ -67,8 +68,8 @@ insert into cars (
     '8-Speed PDK', 'Rear-Wheel Drive', 'GT Silver Metallic', 'Bordeaux Red Leather', 9870,
     'Sport Chrono, PASM, and the Bose surround system on the original options list. Soft top has no repairs and the paint meter readings are factory across all panels.',
     true,
-    'https://picsum.photos/seed/porsche-992-cab-front/800/600',
-    array['https://picsum.photos/seed/porsche-992-cab-top-down/800/600', 'https://picsum.photos/seed/porsche-992-dash/800/600']
+    '/images/cars/38.jpg',
+    array['/images/cars/38.jpg', '/images/cars/27.jpg', '/images/cars/48.jpg']
   ),
   (
     'ford-mustang-gt-convertible-2021',
@@ -79,8 +80,8 @@ insert into cars (
     '10-Speed Automatic', 'Rear-Wheel Drive', 'Race Red', 'Black Onyx Leather', 18340,
     'Active exhaust with the factory quad tips, magnetic dampers, and the comfort package. Recent major service with fresh fluids and a new battery.',
     false,
-    'https://picsum.photos/seed/mustang-gt-red-front/800/600',
-    array['https://picsum.photos/seed/mustang-gt-side/800/600', 'https://picsum.photos/seed/mustang-gt-shaker/800/600']
+    '/images/cars/41.jpg',
+    array['/images/cars/41.jpg', '/images/cars/6.jpg', '/images/cars/30.jpg']
   ),
   (
     'bmw-m8-competition-gran-coupe-2022',
@@ -91,8 +92,8 @@ insert into cars (
     '8-Speed M Steptronic', 'M xDrive', 'Toronto Red', 'Silverstone Merino', 6540,
     'Executive Lounge rear seats and the Bowers & Wilkins diamond surround system. Kept indoors since delivery; all four tires are the original batch.',
     false,
-    'https://picsum.photos/seed/bmw-m8-red-front/800/600',
-    array['https://picsum.photos/seed/bmw-m8-rear/800/600', 'https://picsum.photos/seed/bmw-m8-lounge/800/600']
+    '/images/cars/46.jpg',
+    array['/images/cars/46.jpg', '/images/cars/30.jpg', '/images/cars/38.jpg']
   ),
   (
     'mercedes-benz-s-580-4matic-2021',
@@ -103,8 +104,8 @@ insert into cars (
     '9G-TRONIC', 'All-Wheel Drive', 'Obsidian Black', 'Macchiato Beige Nappa', 23780,
     'Executive package with rear first-class seats. Sold through our showroom in March; listed here for reference of our recent stock.',
     false,
-    'https://picsum.photos/seed/mercedes-s580-front/800/600',
-    array['https://picsum.photos/seed/mercedes-s580-rear-seat/800/600']
+    '/images/cars/48.jpg',
+    array['/images/cars/48.jpg', '/images/cars/27.jpg']
   ),
   (
     'bentley-flying-spur-mulliner-2020',
@@ -115,10 +116,62 @@ insert into cars (
     '8-Speed Dual-Clutch', 'All-Wheel Drive', 'Moonbeam', 'Burnished Cream', 15920,
     'Mulliner driving specification with the rotating display and diamond knurling on the vents. Price on request — currently held with a deposit.',
     false,
-    'https://picsum.photos/seed/flying-spur-mulliner-front/800/600',
-    array['https://picsum.photos/seed/flying-spur-mulliner-interior/800/600', 'https://picsum.photos/seed/flying-spur-wheel/800/600']
+    '/images/cars/6.jpg',
+    array['/images/cars/6.jpg', '/images/cars/48.jpg', '/images/cars/41.jpg']
   )
 on conflict (slug) do nothing;
+
+-- ============ CAR COLORS ============
+-- Satu mobil bisa punya beberapa pilihan warna; tiap warna punya galeri
+-- sendiri. Idempotent: hanya insert jika mobil itu belum punya warna sama
+-- sekali (menghindari duplikat saat seed dijalankan ulang).
+insert into car_colors (car_id, name, hex, gallery_urls, is_default, sort_order)
+select c.id, v.name, v.hex, v.gallery_urls, v.is_default, v.sort_order
+from (values
+  -- Bentley Continental GT Speed — 2 warna
+  ('bentley-continental-gt-speed-2022', 'British Racing Green', '#0a3d2c',
+    array['/images/cars/6.jpg', '/images/cars/41.jpg', '/images/cars/48.jpg'], true, 0),
+  ('bentley-continental-gt-speed-2022', 'Beluga Black', '#111114',
+    array['/images/cars/48.jpg', '/images/cars/6.jpg'], false, 1),
+
+  -- Mercedes-AMG GT 63 S — 2 warna
+  ('mercedes-amg-gt-63-s-4matic-2023', 'Selenite Grey', '#6b6f72',
+    array['/images/cars/27.jpg', '/images/cars/6.jpg', '/images/cars/38.jpg'], true, 0),
+  ('mercedes-amg-gt-63-s-4matic-2023', 'Obsidian Black', '#101012',
+    array['/images/cars/38.jpg', '/images/cars/27.jpg'], false, 1),
+
+  -- BMW M4 Competition — 2 warna
+  ('bmw-m4-competition-xdrive-2023', 'Brooklyn Grey', '#8a8d90',
+    array['/images/cars/30.jpg', '/images/cars/46.jpg', '/images/cars/41.jpg'], true, 0),
+  ('bmw-m4-competition-xdrive-2023', 'Isle of Man Green', '#1f4d3a',
+    array['/images/cars/46.jpg', '/images/cars/30.jpg'], false, 1),
+
+  -- Porsche 911 Carrera S — 2 warna
+  ('porsche-911-carrera-s-cabriolet-992-2022', 'GT Silver Metallic', '#b9bcc0',
+    array['/images/cars/38.jpg', '/images/cars/27.jpg', '/images/cars/48.jpg'], true, 0),
+  ('porsche-911-carrera-s-cabriolet-992-2022', 'Guards Red', '#c8102e',
+    array['/images/cars/48.jpg', '/images/cars/38.jpg'], false, 1),
+
+  -- Ford Mustang GT — 1 warna
+  ('ford-mustang-gt-convertible-2021', 'Race Red', '#d4132a',
+    array['/images/cars/41.jpg', '/images/cars/6.jpg', '/images/cars/30.jpg'], true, 0),
+
+  -- BMW M8 Competition — 1 warna
+  ('bmw-m8-competition-gran-coupe-2022', 'Toronto Red', '#c0362c',
+    array['/images/cars/46.jpg', '/images/cars/30.jpg', '/images/cars/38.jpg'], true, 0),
+
+  -- Mercedes-Benz S 580 (sold) — 1 warna
+  ('mercedes-benz-s-580-4matic-2021', 'Obsidian Black', '#101012',
+    array['/images/cars/48.jpg', '/images/cars/27.jpg'], true, 0),
+
+  -- Bentley Flying Spur Mulliner — 1 warna
+  ('bentley-flying-spur-mulliner-2020', 'Moonbeam', '#d9d4c6',
+    array['/images/cars/6.jpg', '/images/cars/48.jpg', '/images/cars/41.jpg'], true, 0)
+) as v(car_slug, name, hex, gallery_urls, is_default, sort_order)
+join cars c on c.slug = v.car_slug
+where not exists (
+  select 1 from car_colors cc where cc.car_id = c.id
+);
 
 -- ============ INQUIRIES ============
 -- Contoh masuk untuk demo admin panel (lokal/staging saja).

@@ -2,12 +2,16 @@
 
 import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+import { ButtonLink } from "@/components/ui/button";
 
-// Stagger parent — semua child ada di client component yang sama.
+interface HeroSectionProps {
+  /** Jumlah unit tersedia nyata dari database — angka organik, bukan statis */
+  availableCount: number;
+}
+
 const container: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
 
 const item: Variants = {
@@ -19,88 +23,103 @@ const item: Variants = {
   },
 };
 
-// Hero asimetris (split screen 1.1fr / 1fr) — H1 left-aligned,
-// tanpa animasi infinite di sini (hemat GPU; entrance spring saja).
-export default function HeroSection() {
+// Hero asimetris split-screen (DESIGN_VARIANCE 8): teks rata kiri, gambar
+// rata kanan dengan fade ke cream. Anti-center bias.
+export default function HeroSection({ availableCount }: HeroSectionProps) {
   return (
-    <section className="flex min-h-[100dvh] items-center px-4 pb-16 pt-28 md:px-8">
-      <div className="mx-auto grid w-full max-w-[1400px] items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-        <motion.div variants={container} initial="hidden" animate="show">
-          <motion.p
+    <section className="relative min-h-[100dvh] overflow-hidden px-4 pb-16 pt-28 md:px-8">
+      <div className="mx-auto grid max-w-[1400px] items-center gap-12 md:grid-cols-2 md:gap-8">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="relative z-10"
+        >
+          <motion.div
             variants={item}
-            className="text-sm font-medium tracking-tight text-amber-800"
+            className="inline-flex items-center gap-2 rounded-full border border-stone-200/60 bg-white px-4 py-2"
           >
-            Jakarta · Private Showroom
-          </motion.p>
+            <span className="size-2 animate-pulse rounded-full bg-emerald-500" />
+            <span className="text-xs font-medium text-zinc-600">
+              Showroom open — Jakarta
+            </span>
+          </motion.div>
 
           <motion.h1
             variants={item}
-            className="mt-4 text-4xl font-semibold leading-none tracking-tighter text-zinc-900 md:text-6xl"
+            className="mt-6 text-5xl font-bold leading-none tracking-tighter text-zinc-900 md:text-7xl"
           >
-            Luxury cars,
+            Machines worth
             <br />
-            curated like
-            <br />
-            gallery pieces.
+            keeping.
           </motion.h1>
 
           <motion.p
             variants={item}
-            className="mt-6 max-w-[65ch] text-base leading-relaxed text-zinc-600"
+            className="mt-6 max-w-[46ch] text-base leading-relaxed text-zinc-600 md:text-lg"
           >
-            Every Bentley, Mercedes, BMW, and Porsche in this room passed a
-            120-point inspection and arrived with full documentation. No
-            listings noise — just the cars worth your time.
+            A private collection of Bentley, Mercedes, BMW, and Porsche — each
+            one inspected, documented, and presented like a gallery piece. No
+            listings noise.
           </motion.p>
 
           <motion.div variants={item} className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/cars"
-              className="rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium tracking-tight text-white transition-colors hover:bg-zinc-800"
-            >
-              Browse the stock
-            </Link>
-            <Link
-              href="/contact"
-              className="rounded-full border border-stone-200 px-6 py-3 text-sm font-medium tracking-tight text-zinc-900 transition-colors hover:bg-stone-100"
-            >
+            <ButtonLink href="/cars" variant="primary">
+              Browse the collection
+            </ButtonLink>
+            <ButtonLink href="/contact" variant="ghost">
               Book a viewing
-            </Link>
+            </ButtonLink>
+          </motion.div>
+
+          <motion.div
+            variants={item}
+            className="mt-10 flex items-center gap-6 border-t border-stone-200/60 pt-6"
+          >
+            <div>
+              <p className="font-mono text-2xl font-medium text-zinc-900">
+                {availableCount}
+              </p>
+              <p className="text-xs text-zinc-600">cars on the floor</p>
+            </div>
+            <div className="h-8 w-px bg-stone-200/60" />
+            <div>
+              <p className="font-mono text-2xl font-medium text-zinc-900">
+                142
+              </p>
+              <p className="text-xs text-zinc-600">inspection points per car</p>
+            </div>
           </motion.div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.97, y: 32 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{
             type: "spring",
             stiffness: 100,
             damping: 20,
             delay: 0.2,
           }}
-          className="relative"
+          className="relative hidden h-[70vh] md:block"
         >
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2.5rem] border border-stone-200/60">
-            <Image
-              src="https://picsum.photos/seed/digimuda-hero-bentley-green/900/1125"
-              alt="British Racing Green grand tourer in the Digimuda showroom"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 45vw"
-              className="object-cover"
-            />
-          </div>
+          <Image
+            src="/images/cars/6.jpg"
+            alt="Dark green Bentley Continental GT parked in a bright gallery showroom"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="rounded-[2.5rem] object-cover shadow-diffusion"
+          />
+          <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-t from-[#f6f3ed]/60 via-transparent to-transparent" />
 
-          {/* Kartu status mengambang — snapshot data, bukan animasi infinite */}
-          <div className="absolute -left-4 bottom-8 rounded-[1.5rem] border border-stone-200/60 bg-white p-4 shadow-diffusion md:-left-8">
-            <div className="flex items-center gap-2">
-              <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-sm font-medium text-zinc-900">
-                3 new arrivals this week
-              </span>
-            </div>
-            <p className="mt-1 text-xs text-zinc-600">
-              Inspected, documented, ready for viewing.
+          <div className="absolute -left-4 bottom-8 rounded-[2.5rem] border border-white/10 bg-zinc-900 p-6 text-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.25)]">
+            <p className="text-xs text-zinc-400">Now on display</p>
+            <p className="mt-1 text-base font-medium tracking-tight">
+              Bentley Continental GT
+            </p>
+            <p className="mt-2 font-mono text-sm text-amber-500">
+              W12 · 650 hp
             </p>
           </div>
         </motion.div>

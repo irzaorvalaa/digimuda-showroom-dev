@@ -20,3 +20,33 @@ body {
 @utility shadow-diffusion {
   box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
 }
+
+/* Skeleton Shimmer (SKILL.md §8): sapuan cahaya bergerak memakai transform
+   saja → 60fps dan tanpa JS/React re-render, aman untuk perpetual motion. */
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@utility shimmer {
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* Aksesibilitas: hentikan animasi perpetual untuk pengguna yang meminta
+   pengurangan gerak (mendukung target Accessibility ≥ 95). */
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
