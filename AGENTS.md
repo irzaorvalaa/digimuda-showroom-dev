@@ -663,6 +663,69 @@ URUTAN PENGERJAAN (WAJIB DIIKUTI)
 26. Lanjut ke halaman lain sesuai permintaan saya
 
 ============================================================
+ROADMAP SETELAH LANGKAH 25 (WAJIB DIIKUTI)
+============================================================
+Langkah 25 adalah akhir dari setup inti. Sisa pekerjaan dipecah
+jadi batch berikut, dikerjakan BERURUTAN saat saya perintahkan:
+
+BATCH A — Komponen pendukung dasar:
+  26. components/ui/skeleton.tsx
+  27. components/ui/badge.tsx
+  28. components/ui/input.tsx
+  29. components/layout/footer.tsx
+
+BATCH B — Halaman katalog:
+  30. app/cars/page.tsx (filter via searchParams)
+  31. app/cars/loading.tsx
+  32. app/cars/error.tsx
+  33. components/ui/car-filter.tsx (Client Component)
+  34. components/ui/empty-state.tsx
+
+BATCH C — Halaman detail mobil:
+  35. app/cars/[slug]/page.tsx (+ generateMetadata)
+  36. app/cars/[slug]/loading.tsx
+  37. app/cars/[slug]/error.tsx
+  38. app/cars/[slug]/not-found.tsx
+  39. components/sections/car-gallery.tsx
+
+BATCH D — Contact & form:
+  40. lib/queries/inquiries.ts (createInquiry)
+  41. app/contact/page.tsx
+  42. app/contact/actions.ts (sudah ada di contoh)
+  43. components/sections/contact-form.tsx
+
+BATCH E — Halaman statis & section:
+  44. components/sections/process-section.tsx
+  45. components/sections/cta-section.tsx
+  46. app/club/page.tsx
+  47. app/events/page.tsx
+
+BATCH F — Komponen floating:
+  48. components/floating/social-dock.tsx
+  49. components/floating/concierge-button.tsx
+
+BATCH G — Auth admin (opsional, nanti):
+  50. app/auth/login/page.tsx
+  51. app/auth/callback/route.ts
+  52. app/admin/page.tsx (dashboard)
+  53. app/admin/cars/page.tsx (CRUD)
+
+BATCH H — Finalisasi:
+  54. Generate types/database.ts via Supabase CLI
+  55. Refactor types/car.ts agar turunan dari Database
+  56. app/sitemap.ts
+  57. app/robots.ts
+  58. Lighthouse audit
+  59. Setup Vercel + Supabase cloud (staging + prod)
+  60. GitHub Actions untuk migrasi production
+
+ATURAN:
+* Kerjakan batch HANYA saat saya perintahkan.
+* Jangan lompat antar batch.
+* Setiap batch selesai: tsc + lint + build harus exit 0.
+* Setiap batch selesai: kasih saran commit (Conventional Commits).
+
+============================================================
 PESAN PERTAMA UNTUKMU (JAWAB SINGKAT, JANGAN TULIS KODE DULU)
 ============================================================
 1. Konfirmasi singkat (maksimal 15 baris) bahwa kamu paham:
