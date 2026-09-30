@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { MagnifyingGlass, WarningCircle } from "@phosphor-icons/react/dist/ssr";
 import { ButtonLink } from "@/components/ui/button";
-import CarCard from "@/components/ui/car-card";
 import CarFilter from "@/components/ui/car-filter";
+import CarResults from "@/components/ui/car-results";
 import EmptyState from "@/components/ui/empty-state";
-import StaggerGrid, { StaggerItem } from "@/components/ui/stagger-grid";
-import { getCarsByStatus } from "@/lib/queries/cars";
+import Pagination from "@/components/ui/pagination";
+import { getCarsPage, getCarPageSize } from "@/lib/queries/cars";
 
 export const metadata: Metadata = {
   title: "The Collection",
@@ -17,19 +17,24 @@ const validStatuses = ["available", "reserved", "sold"];
 
 interface CarsPageProps {
   // Next.js 15+: searchParams berupa Promise yang harus di-await.
-  searchParams: Promise<{ status?: string }>;
+  searchParams: Promise<{ status?: string; page?: string }>;
 }
 
-// Server Component. Filter status lewat searchParams (server-side fetch).
-// Grid 2 kolom (bukan 3 kolom sejajar) + stagger reveal.
+// Server Component. Filter status + paginasi lewat searchParams
+// (server-side fetch). Setiap halaman menampilkan maksimal 9 unit.
 export default async function CarsPage({ searchParams }: CarsPageProps) {
-  const { status } = await searchParams;
+  const { status, page: pageParam } = await searchParams;
   const activeStatus =
     status && validStatuses.includes(status) ? status : "all";
 
-  const { data: cars, error } = await getCarsByStatus(
-    activeStatus === "all" ? undefined : activeStatus
+  const page = Math.max(1, Number.parseInt(pageParam ?? "1", 10) || 1);
+
+  const { cars, total, error } = await getCarsPage(
+    activeStatus === "all" ? undefined : activeStatus,
+    page
   );
+
+  const totalPages = Math.max(1, Math.ceil(total / getCarPageSize()));
 
   return (
     <main className="min-h-[100dvh] px-4 pb-24 pt-32 md:px-8">
@@ -69,16 +74,14 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
             className="mt-12"
           />
         ) : (
-          <StaggerGrid
-            key={activeStatus}
-            className="mt-12 grid-cols-1 md:grid-cols-2"
-          >
-            {cars.map((car) => (
-              <StaggerItem key={car.id}>
-                <CarCard car={car} />
-              </StaggerItem>
-            ))}
-          </StaggerGrid>
+          <>
+            <CarResults cars={cars} filterKey={activeStatus} total={total} />
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              status={activeStatus === "all" ? undefined : activeStatus}
+            />
+          </>
         )}
       </div>
     </main>

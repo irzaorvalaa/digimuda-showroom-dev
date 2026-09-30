@@ -10,7 +10,7 @@ import Link from "next/link";
 import type { PointerEvent, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type ButtonVariant = "primary" | "ghost" | "gold";
+type ButtonVariant = "primary" | "ghost" | "gold" | "dark";
 
 const spring = { type: "spring", stiffness: 100, damping: 20 } as const;
 
@@ -22,6 +22,8 @@ const variantClasses: Record<ButtonVariant, string> = {
   primary: "bg-zinc-900 text-white hover:bg-zinc-800",
   ghost: "border border-stone-200 text-zinc-900 hover:bg-stone-100",
   gold: "bg-amber-500 text-zinc-900 hover:bg-amber-400",
+  // dark = tombol gelap untuk dipakai di atas surface putih terang.
+  dark: "bg-zinc-900 text-white hover:bg-zinc-800",
 };
 
 // Magnetic micro-physics (SKILL.md §4): posisi disimpan di MotionValue,

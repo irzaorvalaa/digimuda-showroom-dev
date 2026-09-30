@@ -42,25 +42,46 @@ export async function getCarBySlug(
   return { data: (data as Car) ?? null, error: null };
 }
 
-export async function getCarsByStatus(
-  status?: string
-): Promise<QueryResult<Car[]>> {
+const CAR_PAGE_SIZE = 9;
+
+export function getCarPageSize() {
+  return CAR_PAGE_SIZE;
+}
+
+export interface CarsPageResult {
+  cars: Car[];
+  /** Total unit untuk status terpilih (dipakai hitung jumlah halaman). */
+  total: number;
+  error: string | null;
+}
+
+// Katalog dengan paginasi (limit 9 + range + count). Count diambil sekaligus
+// supaya UI bisa menghitung jumlah halaman tanpa request tambahan.
+export async function getCarsPage(
+  status?: string,
+  page = 1
+): Promise<CarsPageResult> {
   const supabase = createPublicClient();
-  let query = supabase.from("cars").select("*, colors:car_colors(*)");
+  const from = Math.max(0, (page - 1) * CAR_PAGE_SIZE);
+  const to = from + CAR_PAGE_SIZE - 1;
+
+  let query = supabase
+    .from("cars")
+    .select("*, colors:car_colors(*)", { count: "exact" });
 
   if (status && ["available", "sold", "reserved"].includes(status)) {
     query = query.eq("status", status);
   }
 
-  const { data, error } = await query.order("created_at", {
-    ascending: false,
-  });
+  const { data, count, error } = await query
+    .order("created_at", { ascending: false })
+    .range(from, to);
 
   if (error) {
-    console.error("getCarsByStatus error:", error.message);
-    return { data: [], error: "Gagal memuat katalog." };
+    console.error("getCarsPage error:", error.message);
+    return { cars: [], total: 0, error: "Gagal memuat katalog." };
   }
-  return { data: (data as Car[]) ?? [], error: null };
+  return { cars: (data as Car[]) ?? [], total: count ?? 0, error: null };
 }
 
 // Jumlah unit tersedia — dipakai hero sebagai angka organik yang nyata,

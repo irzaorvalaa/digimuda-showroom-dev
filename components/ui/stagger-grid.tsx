@@ -65,7 +65,12 @@ interface StaggerItemProps {
 // Grid item + unit stagger. className dipakai untuk col-span (mis. md:col-span-7).
 export function StaggerItem({ children, className }: StaggerItemProps) {
   return (
-    <motion.div variants={item} className={cn("h-full", className)}>
+    <motion.div
+      variants={item}
+      layout
+      transition={{ layout: { type: "spring", stiffness: 100, damping: 20 } }}
+      className={cn("h-full", className)}
+    >
       {children}
     </motion.div>
   );

@@ -36,17 +36,39 @@ body {
   animation: shimmer 1.6s linear infinite;
 }
 
-/* Aksesibilitas: hentikan animasi perpetual untuk pengguna yang meminta
-   pengurangan gerak (mendukung target Accessibility ≥ 95). */
-@media (prefers-reduced-motion: reduce) {
-  .shimmer {
-    animation: none;
+/* Utilitas tipografi premium: headline seimbang & angka tabular agar
+   kolom harga/metrik lurus sempurna (kesan katalog galeri). */
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Keyframes "float" perpetual — transform/opacity saja (60fps), dipakai
+   untuk micro-interaction kalibrasi pada elemen dekoratif. */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
   }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@utility animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Aksesibilitas: hentikan animasi perpetual untuk pengguna yang meminta
+   pengurangan gerak (mendukung target Accessibility ≥ 95). Hanya menarget
+   animasi CSS milik kita, bukan Framer Motion (yang sudah menangani
+   prefers-reduced-motion sendiri), agar tidak saling menimpa. */
+@media (prefers-reduced-motion: reduce) {
+  .shimmer,
+  .animate-float {
+    animation: none;
   }
 }

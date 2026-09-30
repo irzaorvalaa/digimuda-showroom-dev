@@ -19,6 +19,8 @@ export const inquirySchema = z.object({
     .trim()
     .max(1000, "Message must be at most 1000 characters")
     .nullish(),
+  // UUID mobil yang sedang ditanyakan (opsional, dari halaman detail mobil).
+  car_id: z.string().uuid().nullish(),
 });
 
 export type InquiryInput = z.infer<typeof inquirySchema>;

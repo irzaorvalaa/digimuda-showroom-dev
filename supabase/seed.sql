@@ -32,8 +32,8 @@ insert into cars (
     '8-Speed Dual-Clutch', 'All-Wheel Drive', 'British Racing Green', 'Burnt Oak / Linen', 7420,
     'Full main dealer history in Jakarta, ceramic-coated since new. Rear-seat entertainment and the Naim audio system are intact; tires replaced at 6.800 km.',
     true,
-    '/images/cars/6.jpg',
-    array['/images/cars/6.jpg', '/images/cars/41.jpg', '/images/cars/48.jpg']
+    '/images/cars/bentley-continental-gt-speed.jpg',
+    array['/images/cars/bentley-continental-gt-speed.jpg', '/images/cars/bentley-flying-spur.jpg']
   ),
   (
     'mercedes-amg-gt-63-s-4matic-2023',
@@ -44,8 +44,8 @@ insert into cars (
     'AMG SPEEDSHIFT MCT 9-Speed', 'All-Wheel Drive', 'Selenite Grey', 'Nappa Leather Black', 4180,
     'AMG Driver A package and rear-axle steering optioned from the factory. One owner, service done at Sunter authorized workshop.',
     true,
-    '/images/cars/27.jpg',
-    array['/images/cars/27.jpg', '/images/cars/6.jpg', '/images/cars/38.jpg']
+    '/images/cars/mercedes-amg-gt-63-s.jpg',
+    array['/images/cars/mercedes-amg-gt-63-s.jpg', '/images/cars/mercedes-s-580.jpg']
   ),
   (
     'bmw-m4-competition-xdrive-2023',
@@ -56,8 +56,8 @@ insert into cars (
     '8-Speed M Steptronic', 'M xDrive', 'Brooklyn Grey', 'Merino Leather Black', 11250,
     'M Driver''s Package and carbon bucket seats. Front PPF still on, two sets of keys and original run-flat plus a spare wheel set included.',
     true,
-    '/images/cars/30.jpg',
-    array['/images/cars/30.jpg', '/images/cars/46.jpg', '/images/cars/41.jpg']
+    '/images/cars/bmw-m4-competition.jpg',
+    array['/images/cars/bmw-m4-competition.jpg', '/images/cars/bmw-m8-competition.jpg']
   ),
   (
     'porsche-911-carrera-s-cabriolet-992-2022',
@@ -68,8 +68,8 @@ insert into cars (
     '8-Speed PDK', 'Rear-Wheel Drive', 'GT Silver Metallic', 'Bordeaux Red Leather', 9870,
     'Sport Chrono, PASM, and the Bose surround system on the original options list. Soft top has no repairs and the paint meter readings are factory across all panels.',
     true,
-    '/images/cars/38.jpg',
-    array['/images/cars/38.jpg', '/images/cars/27.jpg', '/images/cars/48.jpg']
+    '/images/cars/porsche-911-carrera-s.jpg',
+    array['/images/cars/porsche-911-carrera-s.jpg']
   ),
   (
     'ford-mustang-gt-convertible-2021',
@@ -80,8 +80,8 @@ insert into cars (
     '10-Speed Automatic', 'Rear-Wheel Drive', 'Race Red', 'Black Onyx Leather', 18340,
     'Active exhaust with the factory quad tips, magnetic dampers, and the comfort package. Recent major service with fresh fluids and a new battery.',
     false,
-    '/images/cars/41.jpg',
-    array['/images/cars/41.jpg', '/images/cars/6.jpg', '/images/cars/30.jpg']
+    '/images/cars/ford-mustang-gt.jpg',
+    array['/images/cars/ford-mustang-gt.jpg']
   ),
   (
     'bmw-m8-competition-gran-coupe-2022',
@@ -92,8 +92,8 @@ insert into cars (
     '8-Speed M Steptronic', 'M xDrive', 'Toronto Red', 'Silverstone Merino', 6540,
     'Executive Lounge rear seats and the Bowers & Wilkins diamond surround system. Kept indoors since delivery; all four tires are the original batch.',
     false,
-    '/images/cars/46.jpg',
-    array['/images/cars/46.jpg', '/images/cars/30.jpg', '/images/cars/38.jpg']
+    '/images/cars/bmw-m8-competition.jpg',
+    array['/images/cars/bmw-m8-competition.jpg', '/images/cars/bmw-m4-competition.jpg']
   ),
   (
     'mercedes-benz-s-580-4matic-2021',
@@ -104,8 +104,8 @@ insert into cars (
     '9G-TRONIC', 'All-Wheel Drive', 'Obsidian Black', 'Macchiato Beige Nappa', 23780,
     'Executive package with rear first-class seats. Sold through our showroom in March; listed here for reference of our recent stock.',
     false,
-    '/images/cars/48.jpg',
-    array['/images/cars/48.jpg', '/images/cars/27.jpg']
+    '/images/cars/mercedes-s-580.jpg',
+    array['/images/cars/mercedes-s-580.jpg', '/images/cars/mercedes-amg-gt-63-s.jpg']
   ),
   (
     'bentley-flying-spur-mulliner-2020',
@@ -116,8 +116,8 @@ insert into cars (
     '8-Speed Dual-Clutch', 'All-Wheel Drive', 'Moonbeam', 'Burnished Cream', 15920,
     'Mulliner driving specification with the rotating display and diamond knurling on the vents. Price on request — currently held with a deposit.',
     false,
-    '/images/cars/6.jpg',
-    array['/images/cars/6.jpg', '/images/cars/48.jpg', '/images/cars/41.jpg']
+    '/images/cars/bentley-flying-spur.jpg',
+    array['/images/cars/bentley-flying-spur.jpg', '/images/cars/bentley-continental-gt-speed.jpg']
   )
 on conflict (slug) do nothing;
 
@@ -130,43 +130,43 @@ select c.id, v.name, v.hex, v.gallery_urls, v.is_default, v.sort_order
 from (values
   -- Bentley Continental GT Speed — 2 warna
   ('bentley-continental-gt-speed-2022', 'British Racing Green', '#0a3d2c',
-    array['/images/cars/6.jpg', '/images/cars/41.jpg', '/images/cars/48.jpg'], true, 0),
+    array['/images/cars/bentley-continental-gt-speed.jpg', '/images/cars/bentley-flying-spur.jpg'], true, 0),
   ('bentley-continental-gt-speed-2022', 'Beluga Black', '#111114',
-    array['/images/cars/48.jpg', '/images/cars/6.jpg'], false, 1),
+    array['/images/cars/bentley-flying-spur.jpg', '/images/cars/bentley-continental-gt-speed.jpg'], false, 1),
 
   -- Mercedes-AMG GT 63 S — 2 warna
   ('mercedes-amg-gt-63-s-4matic-2023', 'Selenite Grey', '#6b6f72',
-    array['/images/cars/27.jpg', '/images/cars/6.jpg', '/images/cars/38.jpg'], true, 0),
+    array['/images/cars/mercedes-amg-gt-63-s.jpg', '/images/cars/mercedes-s-580.jpg'], true, 0),
   ('mercedes-amg-gt-63-s-4matic-2023', 'Obsidian Black', '#101012',
-    array['/images/cars/38.jpg', '/images/cars/27.jpg'], false, 1),
+    array['/images/cars/mercedes-s-580.jpg', '/images/cars/mercedes-amg-gt-63-s.jpg'], false, 1),
 
   -- BMW M4 Competition — 2 warna
   ('bmw-m4-competition-xdrive-2023', 'Brooklyn Grey', '#8a8d90',
-    array['/images/cars/30.jpg', '/images/cars/46.jpg', '/images/cars/41.jpg'], true, 0),
+    array['/images/cars/bmw-m4-competition.jpg', '/images/cars/bmw-m8-competition.jpg'], true, 0),
   ('bmw-m4-competition-xdrive-2023', 'Isle of Man Green', '#1f4d3a',
-    array['/images/cars/46.jpg', '/images/cars/30.jpg'], false, 1),
+    array['/images/cars/bmw-m8-competition.jpg', '/images/cars/bmw-m4-competition.jpg'], false, 1),
 
   -- Porsche 911 Carrera S — 2 warna
   ('porsche-911-carrera-s-cabriolet-992-2022', 'GT Silver Metallic', '#b9bcc0',
-    array['/images/cars/38.jpg', '/images/cars/27.jpg', '/images/cars/48.jpg'], true, 0),
+    array['/images/cars/porsche-911-carrera-s.jpg'], true, 0),
   ('porsche-911-carrera-s-cabriolet-992-2022', 'Guards Red', '#c8102e',
-    array['/images/cars/48.jpg', '/images/cars/38.jpg'], false, 1),
+    array['/images/cars/porsche-911-carrera-s.jpg'], false, 1),
 
   -- Ford Mustang GT — 1 warna
   ('ford-mustang-gt-convertible-2021', 'Race Red', '#d4132a',
-    array['/images/cars/41.jpg', '/images/cars/6.jpg', '/images/cars/30.jpg'], true, 0),
+    array['/images/cars/ford-mustang-gt.jpg'], true, 0),
 
   -- BMW M8 Competition — 1 warna
   ('bmw-m8-competition-gran-coupe-2022', 'Toronto Red', '#c0362c',
-    array['/images/cars/46.jpg', '/images/cars/30.jpg', '/images/cars/38.jpg'], true, 0),
+    array['/images/cars/bmw-m8-competition.jpg', '/images/cars/bmw-m4-competition.jpg'], true, 0),
 
   -- Mercedes-Benz S 580 (sold) — 1 warna
   ('mercedes-benz-s-580-4matic-2021', 'Obsidian Black', '#101012',
-    array['/images/cars/48.jpg', '/images/cars/27.jpg'], true, 0),
+    array['/images/cars/mercedes-s-580.jpg', '/images/cars/mercedes-amg-gt-63-s.jpg'], true, 0),
 
   -- Bentley Flying Spur Mulliner — 1 warna
   ('bentley-flying-spur-mulliner-2020', 'Moonbeam', '#d9d4c6',
-    array['/images/cars/6.jpg', '/images/cars/48.jpg', '/images/cars/41.jpg'], true, 0)
+    array['/images/cars/bentley-flying-spur.jpg', '/images/cars/bentley-continental-gt-speed.jpg'], true, 0)
 ) as v(car_slug, name, hex, gallery_urls, is_default, sort_order)
 join cars c on c.slug = v.car_slug
 where not exists (

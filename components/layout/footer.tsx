@@ -1,12 +1,5 @@
 import Link from "next/link";
-import {
-  InstagramLogo,
-  WhatsappLogo,
-  YoutubeLogo,
-  EnvelopeSimple,
-  MapPin,
-} from "@phosphor-icons/react/dist/ssr";
-import { ButtonLink } from "@/components/ui/button";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 
 const exploreLinks = [
   { label: "The Collection", href: "/cars" },
@@ -15,130 +8,118 @@ const exploreLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
-const socialLinks = [
-  {
-    label: "Instagram",
-    href: "https://instagram.com/digimuda.showroom",
-    Icon: InstagramLogo,
-  },
-  {
-    label: "WhatsApp",
-    href: "https://wa.me/6281192630840",
-    Icon: WhatsappLogo,
-  },
-  {
-    label: "YouTube",
-    href: "https://youtube.com/@digimudashowroom",
-    Icon: YoutubeLogo,
-  },
-  {
-    label: "Email",
-    href: "mailto:hello@digimuda-showroom.com",
-    Icon: EnvelopeSimple,
-  },
-];
-
-// Footer premium "Art Gallery": wordmark besar left-aligned, kolom
-// Visit/Contact/Explore, social pill, status "open" pulse. Tanpa kartu —
-// grouping pakai border + negative space (SKILL Rule 4).
+// Footer compact luxury — quiet closing note, bukan showcase.
+// Satu baris wordmark + grid 3 kolom tipis + signature bar.
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto border-t border-stone-200/60 px-4 py-16 md:px-8 md:py-24">
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-12 md:gap-16">
-        {/* Baris atas: wordmark besar + CTA, asimetris */}
-        <div className="flex flex-col gap-8 border-b border-stone-200/60 pb-12 md:flex-row md:items-end md:justify-between md:pb-16">
-          <div>
-            <p className="text-4xl font-bold leading-none tracking-tighter text-zinc-900 md:text-6xl">
-              Digimuda <span className="text-amber-600">ShowRoom</span>
-            </p>
-            <p className="mt-5 max-w-[42ch] text-sm leading-relaxed text-zinc-600 md:text-base">
-              A private showroom for curated luxury cars. Every car inspected
-              across 142 points. Viewing by appointment.
-            </p>
-          </div>
-          <ButtonLink href="/contact" variant="gold" className="w-fit">
-            Book a viewing
-          </ButtonLink>
+    <footer className="relative mt-auto bg-[#161412] text-stone-400">
+      {/* Hairline emas tipis — signature line */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent"
+      />
+
+      <div className="mx-auto max-w-[1400px] px-6 pb-8 pt-14 md:px-10 md:pb-10 md:pt-16">
+        {/* ─── Tier 1: Wordmark + tagline (satu baris) ─── */}
+        <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
+          <p className="font-serif text-3xl italic leading-none tracking-tight text-stone-100 md:text-4xl">
+            Digimuda
+          </p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-amber-500/80">
+            Est. MMXXIV · Jakarta
+          </p>
         </div>
 
-        {/* Baris tengah: Visit / Contact / Explore */}
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr] md:gap-8">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-widest text-zinc-600">
+        {/* ─── Tier 2: 3 kolom direktori ─── */}
+        <div className="mt-10 grid gap-10 border-t border-white/8 pt-8 md:mt-12 md:grid-cols-12 md:gap-8 md:pt-10">
+          {/* Visit */}
+          <div className="md:col-span-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-stone-500">
               Visit
             </p>
-            <p className="mt-4 flex max-w-[32ch] items-start gap-2 text-sm leading-relaxed text-zinc-600">
-              <MapPin size={16} className="mt-0.5 shrink-0 text-amber-700" />
-              <span>
-                Jl. Ciputat Raya No. 21
-                <br />
-                Kebayoran Lama, Jakarta Selatan 12240
-              </span>
-            </p>
-            <p className="mt-4 inline-flex items-center gap-2 text-sm text-zinc-600">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+            <address className="mt-3 not-italic text-sm leading-[1.7] text-stone-300">
+              Jl. Ciputat Raya No. 21, Kebayoran Lama
+              <br />
+              Jakarta Selatan 12240
+            </address>
+            <p className="mt-3 flex items-center gap-2 text-xs leading-relaxed text-stone-500">
+              <span
+                aria-hidden="true"
+                className="relative flex size-2 shrink-0"
+              >
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
               </span>
-              Open daily, 09.00–18.00 WIB
+              <span>Open daily from 9am. Viewings by appointment.</span>
             </p>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <p className="text-xs font-medium uppercase tracking-widest text-zinc-600">
+          {/* Contact */}
+          <div className="md:col-span-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-stone-500">
               Contact
             </p>
-            <a
-              href="mailto:hello@digimuda-showroom.com"
-              className="text-sm text-zinc-600 transition-colors hover:text-zinc-900"
-            >
-              hello@digimuda-showroom.com
-            </a>
-            <a
-              href="https://wa.me/6281192630840"
-              className="font-mono text-sm text-zinc-600 transition-colors hover:text-zinc-900"
-            >
-              +62 811 9263 0840
-            </a>
+            <ul className="mt-3 space-y-2.5">
+              <li>
+                <a
+                  href="mailto:hello@digimuda-showroom.com"
+                  className="group inline-flex items-baseline gap-1.5 text-sm text-stone-300 transition-colors hover:text-amber-500"
+                >
+                  <span className="border-b border-transparent transition-colors group-hover:border-amber-500/40">
+                    hello@digimuda-showroom.com
+                  </span>
+                  <ArrowUpRight
+                    size={11}
+                    className="translate-y-px opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                  />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://wa.me/6281192630840"
+                  className="group inline-flex items-baseline gap-1.5 font-mono text-sm text-stone-300 transition-colors hover:text-amber-500"
+                >
+                  <span className="border-b border-transparent transition-colors group-hover:border-amber-500/40">
+                    +62 811 9263 0840
+                  </span>
+                  <ArrowUpRight
+                    size={11}
+                    className="translate-y-px opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100"
+                  />
+                </a>
+              </li>
+            </ul>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <p className="text-xs font-medium uppercase tracking-widest text-zinc-600">
+          {/* Explore */}
+          <div className="md:col-span-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-stone-500">
               Explore
             </p>
-            {exploreLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm text-zinc-600 transition-colors hover:text-zinc-900"
-              >
-                {link.label}
-              </Link>
-            ))}
+            <ul className="mt-3 space-y-2.5">
+              {exploreLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="group inline-flex items-center text-sm text-stone-300 transition-colors hover:text-amber-500"
+                  >
+                    <span className="border-b border-transparent transition-colors group-hover:border-amber-500/40">
+                      {link.label}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Baris bawah: copyright + social pill */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-stone-200/60 pt-6">
-          <p className="text-xs text-zinc-600">
-            © {year} Digimuda ShowRoom. All rights reserved.
+        {/* ─── Tier 3: Signature bar ─── */}
+        <div className="mt-10 flex flex-col gap-4 border-t border-white/8 pt-6 md:mt-12 md:flex-row md:items-center md:justify-between">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-stone-600">
+            © {year} Digimuda ShowRoom
           </p>
-          <div className="flex items-center gap-2">
-            {socialLinks.map(({ label, href, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Digimuda ShowRoom on ${label}`}
-                className="flex size-9 items-center justify-center rounded-full border border-stone-200/60 text-zinc-600 transition-transform duration-300 hover:-translate-y-0.5 hover:bg-stone-100 hover:text-zinc-900 active:scale-[0.98]"
-              >
-                <Icon size={18} />
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

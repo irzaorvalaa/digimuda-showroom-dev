@@ -1,11 +1,19 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { List, X } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ButtonLink } from "@/components/ui/button";
+import Magnetic from "@/components/motion/magnetic";
+import PulseGlow from "@/components/motion/pulse-glow";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -20,9 +28,16 @@ const spring = { type: "spring", stiffness: 100, damping: 20 } as const;
 // Navbar floating pill gelap di atas background cream.
 // Desktop (md+): logo + link + CTA. Mobile: logo + hamburger -> dropdown
 // berisi link + CTA. Menu ditutup otomatis saat pindah rute.
+// Enhancement Step 1: shrink saat scroll, magnetic link, pill aktif
+// berpindah (layoutId), dan CTA pulse glow.
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  // Shrink on scroll: di atas 50px pill mengecil (scale) halus.
+  const { scrollY } = useScroll();
+  const rawScale = useTransform(scrollY, [0, 100], [1, 0.95]);
+  const scale = useSpring(rawScale, spring);
 
   return (
     <motion.header
@@ -32,51 +47,57 @@ export default function Navbar() {
       className="fixed inset-x-0 top-4 z-50 flex justify-center px-4"
     >
       <nav className="w-full max-w-[1400px]">
-        {/* Pill utama */}
-        <div className="flex items-center justify-between rounded-full border border-white/10 bg-zinc-900 py-2 pl-6 pr-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_20px_40px_-15px_rgba(0,0,0,0.25)]">
-          <Link
-            href="/"
-            className="text-sm font-semibold tracking-tighter text-white"
-          >
-            Digimuda <span className="text-amber-400">ShowRoom</span>
-          </Link>
+        {/* Pill utama — scale halus mengikuti scroll */}
+        <motion.div
+          style={{ scale }}
+          className="flex items-center justify-between rounded-full border border-white/10 bg-zinc-900 py-2 pl-6 pr-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_20px_40px_-15px_rgba(0,0,0,0.25)]"
+        >
+          <Magnetic strength={0.2}>
+            <Link
+              href="/"
+              className="text-sm font-semibold tracking-tighter text-white"
+            >
+              Digimuda <span className="text-amber-500">ShowRoom</span>
+            </Link>
+          </Magnetic>
 
           {/* Link desktop */}
           <div className="hidden items-center gap-1 md:flex">
             {links.map((link) => {
               const active = pathname === link.href;
               return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-current={active ? "page" : undefined}
-                  className={cn(
-                    "relative rounded-full px-4 py-2 text-sm tracking-tight transition-colors",
-                    active ? "text-zinc-900" : "text-zinc-400 hover:text-white"
-                  )}
-                >
-                  {/* Shared-element pill: berpindah halus antar link aktif */}
-                  {active && (
-                    <motion.span
-                      layoutId="nav-active"
-                      transition={spring}
-                      className="absolute inset-0 rounded-full bg-amber-500"
-                    />
-                  )}
-                  <span className="relative">{link.label}</span>
-                </Link>
+                <Magnetic key={link.href} strength={0.2}>
+                  <Link
+                    href={link.href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "relative rounded-full px-4 py-2 text-sm tracking-tight transition-colors",
+                      active
+                        ? "text-zinc-900"
+                        : "text-zinc-400 hover:text-white"
+                    )}
+                  >
+                    {/* Shared-element pill: berpindah halus antar link aktif */}
+                    {active && (
+                      <motion.span
+                        layoutId="navbar-active-pill"
+                        transition={spring}
+                        className="absolute inset-0 rounded-full bg-amber-500"
+                      />
+                    )}
+                    <span className="relative">{link.label}</span>
+                  </Link>
+                </Magnetic>
               );
             })}
           </div>
 
-          {/* CTA desktop */}
-          <ButtonLink
-            href="/contact"
-            variant="gold"
-            className="hidden px-5 py-2.5 md:inline-flex"
-          >
-            Book a Viewing
-          </ButtonLink>
+          {/* CTA desktop — pulse glow */}
+          <PulseGlow className="hidden md:inline-flex">
+            <ButtonLink href="/contact" variant="gold" className="px-5 py-2.5">
+              Book a Viewing
+            </ButtonLink>
+          </PulseGlow>
 
           {/* Tombol hamburger (mobile) */}
           <button
@@ -88,7 +109,7 @@ export default function Navbar() {
           >
             {open ? <X size={20} /> : <List size={20} />}
           </button>
-        </div>
+        </motion.div>
 
         {/* Dropdown mobile */}
         <AnimatePresence>

@@ -7,7 +7,7 @@ import { ButtonLink } from "@/components/ui/button";
 import CarGallery from "@/components/sections/car-gallery";
 import StaggerGrid, { StaggerItem } from "@/components/ui/stagger-grid";
 import { getCarBySlug } from "@/lib/queries/cars";
-import { formatMileage, formatPrice } from "@/lib/utils";
+import { formatMileage } from "@/lib/utils";
 import type { Car } from "@/types/car";
 
 // ISR: data publik mobil bisa di-cache 60 detik (aturan fetching #1).
@@ -129,9 +129,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
                   {car.year}
                 </span>
                 <span className="h-4 w-px bg-stone-200/60" />
-                <span className="font-mono text-2xl font-medium text-zinc-900">
-                  {formatPrice(car.price_idr)}
-                </span>
+                <span className="font-mono text-2xl font-medium text-zinc-900"></span>
               </div>
             </div>
 
