@@ -6,6 +6,8 @@ interface InputProps extends ComponentProps<"input"> {
   label: string;
   helperText?: string;
   error?: string;
+  /** tone="dark" untuk input di atas surface gelap (area admin/auth). */
+  tone?: "light" | "dark";
 }
 
 // Input form sesuai SKILL.md Rule 6: label di atas, helper opsional,
@@ -15,6 +17,7 @@ export default function Input({
   label,
   helperText,
   error,
+  tone = "light",
   className,
   id,
   ...props
@@ -22,11 +25,16 @@ export default function Input({
   const autoId = useId();
   const inputId = id ?? autoId;
 
+  const isDark = tone === "dark";
+
   return (
     <div className="flex flex-col gap-2">
       <label
         htmlFor={inputId}
-        className="text-sm font-medium tracking-tight text-zinc-900"
+        className={cn(
+          "text-sm font-medium tracking-tight",
+          isDark ? "text-zinc-200" : "text-zinc-900"
+        )}
       >
         {label}
       </label>
@@ -35,20 +43,29 @@ export default function Input({
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${inputId}-error` : undefined}
         className={cn(
-          "w-full rounded-2xl border bg-white px-4 py-3 text-sm text-zinc-900 placeholder:text-zinc-500 focus:outline-none focus:ring-2",
+          "w-full rounded-2xl border px-4 py-3 text-sm focus:outline-none focus:ring-2",
+          isDark
+            ? "bg-white/[0.03] text-zinc-100 placeholder:text-zinc-600"
+            : "bg-white text-zinc-900 placeholder:text-zinc-500",
           error
             ? "border-red-400 focus:border-red-400 focus:ring-red-400/20"
+            : isDark
+            ? "border-white/10 focus:border-amber-500/60 focus:ring-amber-500/20"
             : "border-stone-200/60 focus:border-amber-500 focus:ring-amber-500/30",
           className
         )}
         {...props}
       />
       {error ? (
-        <p id={`${inputId}-error`} className="text-xs text-red-600">
+        <p className={cn("text-xs", isDark ? "text-red-400" : "text-red-600")}>
           {error}
         </p>
       ) : helperText ? (
-        <p className="text-xs text-zinc-600">{helperText}</p>
+        <p
+          className={cn("text-xs", isDark ? "text-zinc-500" : "text-zinc-600")}
+        >
+          {helperText}
+        </p>
       ) : null}
     </div>
   );

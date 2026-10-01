@@ -53,13 +53,22 @@ export async function generateMetadata({
 
 // Spesifikasi "panjang" ditampilkan sebagai baris border divide-y
 // (SKILL.md Rule 4: kelompokkan dengan garis, bukan kotak kartu).
+// swatch: kode hex opsional untuk swatch bulat kecil di samping nilai.
 function buildSpecRows(car: Car) {
-  const rows = [
+  const rows: Array<{
+    label: string;
+    value: string | null;
+    swatch?: string | null;
+  }> = [
     { label: "Engine", value: car.engine },
     { label: "Transmission", value: car.transmission },
     { label: "Drivetrain", value: car.drivetrain },
-    { label: "Exterior", value: car.exterior_color },
-    { label: "Interior", value: car.interior_color },
+    {
+      label: "Exterior",
+      value: car.exterior_color,
+      swatch: car.colors.find((color) => color.is_default)?.hex ?? null,
+    },
+    { label: "Interior", value: car.interior_color, swatch: car.interior_hex },
     { label: "Mileage", value: formatMileage(car.mileage_km) },
     { label: "Year", value: String(car.year) },
   ];
@@ -164,7 +173,14 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
                   className="flex items-center justify-between gap-4 py-3"
                 >
                   <span className="text-sm text-zinc-600">{row.label}</span>
-                  <span className="font-mono text-sm font-medium text-zinc-900">
+                  <span className="flex items-center gap-2 font-mono text-sm font-medium text-zinc-900">
+                    {row.swatch && (
+                      <span
+                        aria-hidden="true"
+                        className="h-3.5 w-3.5 shrink-0 rounded-full border border-stone-200/60"
+                        style={{ backgroundColor: row.swatch }}
+                      />
+                    )}
                     {row.value}
                   </span>
                 </div>

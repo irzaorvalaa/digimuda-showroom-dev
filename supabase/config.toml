@@ -219,8 +219,11 @@ web3 = 30
 
 [auth.email]
 # Allow/disallow new user signups via email to your project.
-# DIGIMUDA: matikan signup publik via email (admin di-invite manual).
-enable_signup = false
+# DIGIMUDA: provider email HARUS true supaya admin bisa LOGIN dengan email.
+# Pada Supabase CLI, flag ini mematikan seluruh provider email (login +
+# signup) bila false — bukan hanya signup. Signup publik tetap diblokir
+# oleh [auth].enable_signup = false (flag global) di atas.
+enable_signup = true
 # If enabled, a user will be required to confirm any email change on both the old, and new email
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true

@@ -1,14 +1,14 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import type { Database } from "@/types/database";
 
 // Client Supabase untuk Server Component / Route Handler yang butuh session
 // (area admin/auth). Rute yang memakainya otomatis menjadi dynamic karena
 // membaca cookies. Data publik TIDAK pakai file ini — pakai public.ts.
-// TODO: tambahkan generic <Database> setelah types/database.ts di-generate.
 export async function createClient() {
   const cookieStore = await cookies();
 
-  return createServerClient(
+  return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {

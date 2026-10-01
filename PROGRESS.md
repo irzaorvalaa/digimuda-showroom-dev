@@ -28,15 +28,35 @@
 | **Section statis (44-47 AGENTS: process, cta, club, events)**                            | ✅ **RAMPUNG** |
 | Batch E (floating: social-dock, concierge-button)                                        | ✅ **RAMPUNG** |
 | Batch F (multi language ( english & indonesia), add toggle di navbar (mobile & desktop)) | ⬜ Belum       |
-| Batch G (auth admin, opsional)                                                           | ⬜ Belum       |
-| Batch H (admin dashboard + crud content cars)                                            | ⬜ Belum       |
+| Batch G (auth admin, with supabase, luxury design)                                       | ✅ **RAMPUNG** |
+| Batch H (admin dashboard + crud content cars)                                            | ✅ **RAMPUNG** |
 | Batch I (finalisasi + deploy)                                                            | ⬜ Belum       |
 
 ---
 
 ## 🎯 Next Step
 
-**Selesai:** Redesign "Art Gallery Mode" (harga → "Ask Us", bento grid, motion).
+**Selesai:** Batch H — Admin Dashboard + CRUD + 2 Roles.
+
+- `supabase/migrations/0007_admin_roles.sql` — kolom `admins.role` (`super_admin` / `admin`) + fungsi `current_admin_role()` & `is_super_admin()` (security definer). Policy UPDATE/DELETE untuk cars, brands, car_colors, inquiries, dan storage dipecah: sekarang hanya `is_super_admin()`. INSERT tetap `is_admin()` (semua role boleh create). Admin existing di-staging di-promote ke `super_admin` saat migrasi.
+- `types/database.ts` — tambah kolom `role` + 2 fungsi baru (sesuai hasil `supabase gen types`).
+- `supabase/seed.sql` — admin lokal di-seed sebagai `super_admin`.
+- `lib/queries/admin.ts` — `getSession()` kembali membaca role via RPC; guard baru `requireSuperAdmin()`; query CRUD: `getAdminCars`, `getAdminCarById`, `createCar`, `updateCar`, `deleteCar`, `getInquiries`, `updateInquiryStatus`, `deleteInquiry`, `getBrandsWithCounts`, `createBrand`, `updateBrand`, `deleteBrand`.
+- `lib/admin/constants.ts` — `ADMIN_NAV_ITEMS` + `AdminRole` dipindah ke file client-safe (tanpa `next/headers`) supaya `admin-nav.tsx` tidak menarik server client ke browser bundle (build error Turbopack).
+- `lib/validators.ts` — `carSchema` (cermin constraint tabel cars), `brandSchema`, `inquiryStatusSchema`.
+- Server Actions: `app/admin/cars/actions.ts`, `app/admin/inquiries/actions.ts`, `app/admin/brands/actions.ts` — semua validasi zod + `requireSuperAdmin()` + `revalidatePath` (admin + halaman publik).
+- Komponen: `components/layout/admin-nav.tsx` (pill gelap + layoutId + badge role), `components/sections/car-form.tsx` (3 kelompok field), `components/sections/brand-form.tsx`, `components/sections/inquiry-status-form.tsx` (inline), `components/ui/delete-button.tsx` (konfirmasi inline).
+- Halaman: `/admin` (dashboard + link inquiries), `/admin/cars` (list divide-y + thumbnail), `/admin/cars/new`, `/admin/cars/[id]/edit`, `/admin/inquiries`, `/admin/brands`, `/admin/brands/[id]/edit`.
+- `app/admin/layout.tsx` — `requireAdmin()` dipindah ke layout (guard sekali untuk semua rute /admin) + `AdminNav` dengan role.
+
+**Verifikasi:** `tsc --noEmit` exit 0 · `eslint` exit 0 · `next build` exit 0
+Route admin semuanya dynamic (ƒ): `/admin`, `/admin/cars`, `/admin/cars/new`, `/admin/cars/[id]/edit`, `/admin/inquiries`, `/admin/brands`, `/admin/brands/[id]/edit`
+
+**Berikutnya:** Batch F — multi-language (EN + ID) + toggle navbar, atau Batch I — finalisasi + deploy.
+
+---
+
+**Selesai (lama):** Redesign "Art Gallery Mode" (harga → "Ask Us", bento grid, motion).
 
 - `supabase/migrations/0006_set_all_prices_null.sql` — `update cars set price_idr = null` (semua harga "Ask Us")
 - `components/ui/car-card.tsx` — hapus angka harga → baris "PRICE / Ask Us" (text-amber-700), tetap pakai spotlight + foil + tilt (MotionValue, tanpa re-render)
@@ -214,14 +234,16 @@ Kirim ke model (Cline / DeepSeek):
 
 ## 📅 Riwayat Batch
 
-| Tanggal    | Batch         | Commit  | Catatan                                             |
-| ---------- | ------------- | ------- | --------------------------------------------------- |
-| 2026-09-29 | Setup 1-10    | —       | env, supabase clients, utils, validators            |
-| 2026-09-29 | Setup 11-16   | —       | migrations 0001-0004 + seed                         |
-| 2026-09-29 | Setup 17-20   | —       | layout, globals, navbar                             |
-| 2026-09-29 | Setup 21-23   | —       | hero, car-card, queries/cars                        |
-| 2026-09-29 | Setup 24-25   | (belum) | featured-stock + app/page.tsx                       |
-| 2026-09-29 | Batch A       | (belum) | skeleton, badge, input, footer + dipasang           |
-| 2026-09-29 | Batch D       | (belum) | contact form + Server Action + inquiries            |
-| 2026-09-29 | Section 44-47 | (belum) | process, cta, club, events + home dirangkai         |
-| 2026-09-30 | Batch E       | (belum) | social-dock + concierge-button + dipasang di layout |
+| Tanggal    | Batch         | Commit  | Catatan                                              |
+| ---------- | ------------- | ------- | ---------------------------------------------------- |
+| 2026-09-29 | Setup 1-10    | —       | env, supabase clients, utils, validators             |
+| 2026-09-29 | Setup 11-16   | —       | migrations 0001-0004 + seed                          |
+| 2026-09-29 | Setup 17-20   | —       | layout, globals, navbar                              |
+| 2026-09-29 | Setup 21-23   | —       | hero, car-card, queries/cars                         |
+| 2026-09-29 | Setup 24-25   | (belum) | featured-stock + app/page.tsx                        |
+| 2026-09-29 | Batch A       | (belum) | skeleton, badge, input, footer + dipasang            |
+| 2026-09-29 | Batch D       | (belum) | contact form + Server Action + inquiries             |
+| 2026-09-29 | Section 44-47 | (belum) | process, cta, club, events + home dirangkai          |
+| 2026-09-30 | Batch E       | (belum) | social-dock + concierge-button + dipasang di layout  |
+| 2026-09-30 | Batch G       | (belum) | auth admin: login form + callback + proxy guard      |
+| 2026-10-01 | Batch H       | (belum) | admin dashboard + CRUD cars/brands/inquiries + roles |

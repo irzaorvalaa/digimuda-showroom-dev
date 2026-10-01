@@ -5,10 +5,6 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
-import Footer from "@/components/layout/footer";
-import Navbar from "@/components/layout/navbar";
-import ConciergeButton from "@/components/floating/concierge-button";
-import SocialDock from "@/components/floating/social-dock";
 
 export const metadata: Metadata = {
   // metadataBase wajib agar URL Open Graph/Twitter absolut saat di-share.
@@ -21,6 +17,9 @@ export const metadata: Metadata = {
     "A private showroom of curated luxury and performance cars in Jakarta. Every car inspected, documented, and presented like a gallery piece.",
 };
 
+// Root layout minimalis: hanya font + background. Chrome publik (navbar,
+// footer, floating buttons) dipasang di app/(public)/layout.tsx supaya
+// rute /admin dan /admin tetap bersih tanpa elemen publik.
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -28,14 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-[100dvh] flex-col bg-[#f6f3ed] font-sans text-zinc-900">
-        <Navbar />
         {children}
-        <Footer />
-        {/* Elemen mengambang kanan bawah: social dock di atas, concierge di bawah */}
-        <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-6">
-          <SocialDock />
-          <ConciergeButton />
-        </div>
       </body>
     </html>
   );

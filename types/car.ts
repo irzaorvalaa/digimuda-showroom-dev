@@ -38,6 +38,8 @@ export interface Car {
   drivetrain: string | null;
   exterior_color: string | null;
   interior_color: string | null;
+  /** Kode hex warna interior (untuk swatch), contoh "#6b4a2f". */
+  interior_hex: string | null;
   mileage_km: number | null;
   description: string | null;
   is_featured: boolean;

@@ -1,13 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import type { Database } from "@/types/database";
 
 // Refresh token Supabase sebelum request diteruskan ke rute.
 // Dipanggil dari proxy.ts (root) HANYA untuk rute /admin dan /auth.
-// TODO: tambahkan guard redirect ke halaman login saat admin panel dibangun.
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
-  const supabase = createServerClient(
+  const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -31,7 +31,17 @@ export async function updateSession(request: NextRequest) {
 
   // PENTING: jangan menaruh kode apa pun antara createServerClient dan
   // getUser() — bisa membatalkan refresh token dan merusak session.
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // Guard /admin: belum login → redirect ke halaman login. Halaman login
+  // sendiri (/auth/*) tetap bisa diakses tanpa session.
+  if (!user && request.nextUrl.pathname.startsWith("/admin")) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = "/auth/login";
+    return NextResponse.redirect(redirectUrl);
+  }
 
   return supabaseResponse;
 }

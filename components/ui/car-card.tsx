@@ -17,8 +17,13 @@ interface CarCardProps {
   car: Car;
   /** true hanya untuk gambar di atas the fold (next/image priority) */
   priority?: boolean;
-  /** "hero" untuk kartu besar 2x2 di Bento Grid (gambar aspect-video, teks lebih besar) */
-  variant?: "default" | "hero";
+  /**
+   * "hero"    kartu besar 2x2 di Bento Grid (aspect-video, teks lebih besar)
+   * "tall"    kartu 1x2 di samping hero — gambar potret, bukan aspect-video
+   *           yang di-stretch. Dipakai di FeaturedStock untuk index ke-2.
+   * "default" kartu standar 1x1.
+   */
+  variant?: "default" | "hero" | "tall";
   className?: string;
 }
 
@@ -35,6 +40,7 @@ export default function CarCard({
   className,
 }: CarCardProps) {
   const isHero = variant === "hero";
+  const isTall = variant === "tall";
 
   // Posisi kursor relatif terhadap kartu (0..1), dipakai spotlight & tilt.
   const mouseX = useMotionValue(0.5);
@@ -97,7 +103,7 @@ export default function CarCard({
         <div
           className={cn(
             "relative w-full overflow-hidden",
-            isHero ? "aspect-video" : "aspect-[4/3]"
+            isHero ? "aspect-video" : isTall ? "aspect-[3/4]" : "aspect-[4/3]"
           )}
         >
           <Image
@@ -132,7 +138,7 @@ export default function CarCard({
             <h3
               className={cn(
                 "font-semibold tracking-tight text-zinc-900",
-                isHero ? "text-2xl md:text-3xl" : "text-lg"
+                isHero ? "text-2xl md:text-3xl" : isTall ? "text-xl" : "text-lg"
               )}
             >
               {car.name}
@@ -147,9 +153,7 @@ export default function CarCard({
               <span className="font-mono tabular-nums">{car.power_hp} hp</span>
             )}
             {car.power_hp !== null && car.mileage_km !== null && (
-              <span aria-hidden="true" className="text-stone-300">
-                ·
-              </span>
+              <span aria-hidden className="h-3 w-px bg-stone-300" />
             )}
             {car.mileage_km !== null && (
               <span className="font-mono tabular-nums">
@@ -158,14 +162,14 @@ export default function CarCard({
             )}
           </div>
 
-          {/* Baris harga — label PRICE + "Ask Us" (tanpa angka, sesuai migrasi price_idr = null) */}
+          {/* Baris harga — label Price + "Ask Us" (tanpa angka, sesuai migrasi price_idr = null) */}
           <div className="relative mt-auto flex items-baseline justify-between gap-4 overflow-hidden border-t border-stone-200/60 pt-4">
             <motion.div
               aria-hidden
               style={{ background: spotlight }}
               className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
             />
-            <span className="relative font-mono text-xs uppercase tracking-widest text-zinc-600">
+            <span className="relative font-mono text-xs text-zinc-500">
               Price
             </span>
             <span className="relative font-mono text-base font-medium text-amber-700">

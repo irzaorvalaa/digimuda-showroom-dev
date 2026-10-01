@@ -17,23 +17,28 @@ interface FeaturedStockProps {
   error?: string | null;
 }
 
-// Server Component. Bento Grid asimetris 3 kolom x 2 baris:
-// kartu pertama menjadi "hero" 2x2 (gambar aspect-video, teks besar),
-// sisanya 1x1 mengisi ruang. Bukan 3 kolom sejajar (SKILL.md anti-center).
-// Stagger didelegasikan ke StaggerGrid (client leaf).
+// Server Component. Blok atas mengisi grid 3x2 secara penuh dengan HANYA
+// 2 kartu — hero 2x2 di kiri, satu kartu tinggi 1x2 di kanan — supaya
+// keduanya benar-benar terasa seperti pameran, bukan "kartu besar + kartu
+// kecil sisa". Mobil ke-3 dst. mengalir sebagai grid biasa di bawahnya.
+// Tanpa eyebrow label kapital (SKILL.md anti-tell); makna "featured"
+// dibawa oleh heading itu sendiri.
 export default function FeaturedStock({ cars, error }: FeaturedStockProps) {
   return (
     <section className="px-4 py-20 md:px-8 md:py-28">
       <div className="mx-auto max-w-[1400px]">
-        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-sm font-medium text-amber-800">Featured Stock</p>
-            <h2 className="mt-2 text-4xl font-bold tracking-tighter text-zinc-900 md:text-5xl">
+            <h2 className="text-4xl font-bold tracking-tighter text-zinc-900 md:text-5xl">
               Currently on the floor
             </h2>
-            <p className="mt-3 font-mono text-sm tabular-nums text-zinc-600">
-              <AnimatedCounter value={cars.length} /> cars available
-            </p>
+            <div className="mt-4 flex items-center gap-3">
+              <span aria-hidden className="h-px w-8 bg-amber-600" />
+              <p className="font-mono text-sm tabular-nums text-zinc-600">
+                <AnimatedCounter value={cars.length} />{" "}
+                {cars.length === 1 ? "car" : "cars"} available
+              </p>
+            </div>
           </div>
           <Link
             href="/cars"
@@ -76,18 +81,19 @@ export default function FeaturedStock({ cars, error }: FeaturedStockProps) {
           <StaggerGrid className="mt-12 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2">
             {cars.map((car, index) => {
               const isHero = index === 0;
-              const className = isHero
+              const isTall = index === 1;
+              const span = isHero
                 ? "sm:col-span-2 md:col-span-2 md:row-span-2"
-                : index === 1
-                ? "md:row-span-1"
-                : "md:row-span-1";
+                : isTall
+                ? "md:row-span-2"
+                : "";
 
               return (
-                <StaggerItem key={car.id} className={className}>
+                <StaggerItem key={car.id} className={span}>
                   <CarCard
                     car={car}
                     variant={isHero ? "hero" : "default"}
-                    priority={index === 0}
+                    priority={index < 2}
                   />
                 </StaggerItem>
               );
