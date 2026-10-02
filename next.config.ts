@@ -10,6 +10,19 @@ const nextConfig: NextConfig = {
         hostname: "*.supabase.co",
         pathname: "/storage/v1/object/public/**",
       },
+      // Placeholder gambar (sementara) — dipakai hero-image & kartu dummy.
+      // Ganti dengan aset final di Supabase Storage bila sudah siap.
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+        pathname: "/**",
+      },
+      // Placeholder berlabel teks (why-digimuda & section statis).
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+        pathname: "/**",
+      },
     ],
   },
 };

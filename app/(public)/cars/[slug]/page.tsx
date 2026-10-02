@@ -130,7 +130,7 @@ export default async function CarDetailPage({ params }: CarDetailPageProps) {
           <div className="flex flex-col gap-8 md:col-span-5">
             <div>
               <Badge status={car.status} />
-              <h1 className="mt-4 text-4xl font-bold leading-none tracking-tighter text-zinc-900 md:text-5xl">
+              <h1 className="mt-4 text-display font-semibold leading-none text-zinc-900">
                 {car.name}
               </h1>
               <div className="mt-3 flex items-baseline gap-3">

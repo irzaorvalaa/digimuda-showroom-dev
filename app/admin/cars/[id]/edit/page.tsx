@@ -44,7 +44,7 @@ export default async function EditCarPage({ params }: EditCarPageProps) {
 
         <div className="mt-8">
           <p className="text-sm font-medium text-amber-500">Editing</p>
-          <h1 className="mt-2 text-4xl font-bold tracking-tighter text-zinc-100 md:text-5xl">
+          <h1 className="mt-2 text-h1 font-semibold text-zinc-100">
             {car.car.name}
           </h1>
           <p className="mt-3 max-w-[55ch] text-sm leading-relaxed text-zinc-400">

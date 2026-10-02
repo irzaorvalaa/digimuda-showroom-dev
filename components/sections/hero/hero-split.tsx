@@ -7,7 +7,7 @@ import GrainOverlay from "@/components/motion/grain-overlay";
 import KineticMarquee from "@/components/motion/kinetic-marquee";
 import TiltCard from "@/components/motion/tilt-card";
 
-interface HeroSectionProps {
+interface HeroSplitProps {
   /** Jumlah unit tersedia nyata dari database — angka organik, bukan statis */
   availableCount: number;
 }
@@ -49,7 +49,7 @@ const MARQUEE_ITEMS = [
 
 // Hero asimetris split-screen (DESIGN_VARIANCE 8): teks rata kiri, gambar
 // rata kanan dengan fade ke cream. Anti-center bias.
-export default function HeroSection({ availableCount }: HeroSectionProps) {
+export default function HeroSplit({ availableCount }: HeroSplitProps) {
   return (
     <section className="relative min-h-[100dvh] overflow-hidden px-4 pb-16 pt-28 md:px-8">
       {/* Grain overlay — pointer-events-none, fixed ke viewport */}
@@ -72,8 +72,8 @@ export default function HeroSection({ availableCount }: HeroSectionProps) {
             </span>
           </motion.div>
 
-          {/* Text mask reveal untuk H1 */}
-          <h1 className="mt-6 text-balance text-5xl font-bold leading-none tracking-tighter text-zinc-900 md:text-7xl">
+          {/* Text mask reveal untuk H1 — fluid clamp (SKILL.md §11), anti-center */}
+          <h1 className="mt-6 text-[clamp(2.5rem,6vw,6rem)] font-semibold leading-[0.95] tracking-tighter text-[var(--text-primary)]">
             <span className="block overflow-hidden">
               <motion.span variants={lineMask} className="block">
                 Machines worth
@@ -141,6 +141,12 @@ export default function HeroSection({ availableCount }: HeroSectionProps) {
           className="relative hidden h-[70vh] md:block"
         >
           <TiltCard className="h-full w-full">
+            {/* Ambient glow (SKILL.md §14C): sorot lampu showroom di belakang
+                mobil — blur di pseudo-element, pointer-events-none. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 -z-10 scale-125 rounded-full bg-[radial-gradient(circle,rgba(245,158,11,0.15)_0%,transparent_70%)] blur-[80px]"
+            />
             <Image
               src="/images/cars/bentley-continental-gt-speed.jpg"
               alt="Bentley Continental GT Speed parked in a bright gallery showroom"
@@ -149,7 +155,7 @@ export default function HeroSection({ availableCount }: HeroSectionProps) {
               sizes="(max-width: 768px) 100vw, 50vw"
               className="rounded-[2.5rem] object-cover shadow-diffusion"
             />
-            <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-t from-[#f6f3ed]/60 via-transparent to-transparent" />
+            <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-t from-[var(--surface-base)]/60 via-transparent to-transparent" />
 
             <div className="absolute -left-4 bottom-8 rounded-[2.5rem] border border-white/10 bg-zinc-900 p-6 text-white shadow-[0_20px_40px_-15px_rgba(0,0,0,0.25)]">
               <p className="text-xs text-zinc-400">Now on display</p>

@@ -37,7 +37,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             <p className="text-sm font-medium uppercase tracking-widest text-amber-800">
               Concierge
             </p>
-            <h1 className="mt-4 text-4xl font-bold leading-none tracking-tighter text-zinc-900 md:text-5xl">
+            <h1 className="mt-4 text-display font-semibold leading-none text-zinc-900">
               Start a conversation.
             </h1>
             <p className="mt-6 max-w-[55ch] text-base leading-relaxed text-zinc-600">

@@ -22,9 +22,7 @@ export default async function AdminBrandsPage() {
       <div className="mx-auto max-w-[1400px]">
         <div>
           <p className="text-sm font-medium text-amber-500">Catalogue</p>
-          <h1 className="mt-2 text-4xl font-bold tracking-tighter text-zinc-100 md:text-6xl">
-            Brands
-          </h1>
+          <h1 className="mt-2 text-h1 font-semibold text-zinc-100">Brands</h1>
           <p className="mt-3 font-mono text-sm text-zinc-500">
             {brands.length} {brands.length === 1 ? "brand" : "brands"}
           </p>

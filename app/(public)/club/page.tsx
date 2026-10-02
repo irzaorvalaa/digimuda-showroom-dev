@@ -68,7 +68,7 @@ export default function ClubPage() {
             <p className="text-sm font-medium uppercase tracking-widest text-amber-800">
               Digimuda Club
             </p>
-            <h1 className="mt-4 max-w-[16ch] text-4xl font-bold leading-none tracking-tighter text-zinc-900 md:text-6xl">
+            <h1 className="mt-4 max-w-[16ch] text-display font-semibold leading-none text-zinc-900">
               A quiet list of people who care.
             </h1>
             <p className="mt-6 max-w-[55ch] text-base leading-relaxed text-zinc-600 md:text-lg">
@@ -99,7 +99,7 @@ export default function ClubPage() {
 
         {/* Benefit — baris divide-y, bukan kartu */}
         <div className="mt-24 md:mt-32">
-          <h2 className="text-3xl font-bold tracking-tighter text-zinc-900 md:text-4xl">
+          <h2 className="text-h3 font-semibold text-zinc-900">
             What membership actually does.
           </h2>
 

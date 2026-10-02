@@ -46,7 +46,7 @@ export default async function EditBrandPage({ params }: EditBrandPageProps) {
 
         <div className="mt-8">
           <p className="text-sm font-medium text-amber-500">Editing</p>
-          <h1 className="mt-2 text-4xl font-bold tracking-tighter text-zinc-100 md:text-5xl">
+          <h1 className="mt-2 text-h1 font-semibold text-zinc-100">
             {brand.name}
           </h1>
         </div>

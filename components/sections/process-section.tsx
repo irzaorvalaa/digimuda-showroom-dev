@@ -44,7 +44,7 @@ export default function ProcessSection() {
           <p className="text-sm font-medium uppercase tracking-widest text-amber-800">
             The process
           </p>
-          <h2 className="mt-4 text-4xl font-bold leading-none tracking-tighter text-zinc-900 md:text-5xl">
+          <h2 className="mt-4 text-h1 font-semibold text-[var(--text-primary)]">
             Four steps,
             <br />
             no theatre.

@@ -42,7 +42,7 @@ export default async function CarsPage({ searchParams }: CarsPageProps) {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-sm font-medium text-amber-800">Catalog</p>
-            <h1 className="mt-2 text-4xl font-bold tracking-tighter text-zinc-900 md:text-6xl">
+            <h1 className="mt-2 text-h1 font-semibold text-zinc-900">
               The Collection
             </h1>
           </div>

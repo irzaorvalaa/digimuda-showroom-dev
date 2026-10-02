@@ -19,7 +19,7 @@ export default function CtaSection() {
               <p className="text-sm font-medium uppercase tracking-widest text-amber-500">
                 Private access
               </p>
-              <h2 className="mt-5 max-w-[18ch] text-4xl font-bold leading-none tracking-tighter text-white md:text-6xl">
+              <h2 className="mt-5 max-w-[18ch] text-h1 font-semibold text-white">
                 Some cars never reach the floor.
               </h2>
               <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-zinc-400 md:text-lg">

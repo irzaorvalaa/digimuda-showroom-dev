@@ -14,7 +14,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-auto bg-[#161412] text-stone-400">
+    <footer className="relative mt-auto bg-[var(--surface-inverse-deep)] text-stone-400">
       {/* Hairline emas tipis — signature line */}
       <div
         aria-hidden="true"

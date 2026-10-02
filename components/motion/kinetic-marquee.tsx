@@ -24,7 +24,7 @@ function KineticMarquee({ items, speed = 60, className }: KineticMarqueeProps) {
     <div className="flex shrink-0 items-center">
       {items.map((item, index) => (
         <span key={index} className="flex items-center">
-          <span className="px-6 text-3xl font-semibold tracking-tighter text-zinc-300 md:text-5xl">
+          <span className="px-6 text-h2 font-semibold tracking-tight text-zinc-300">
             {item}
           </span>
           <span className="size-1.5 rounded-full bg-amber-500/50" aria-hidden />

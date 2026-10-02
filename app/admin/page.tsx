@@ -52,7 +52,7 @@ export default async function AdminDashboard() {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-sm font-medium text-amber-500">Dashboard</p>
-            <h1 className="mt-2 text-4xl font-bold tracking-tighter text-zinc-100 md:text-6xl">
+            <h1 className="mt-2 text-h1 font-semibold text-zinc-100">
               Inventory overview
             </h1>
             <p className="mt-3 font-mono text-sm text-zinc-500">
@@ -96,7 +96,7 @@ export default async function AdminDashboard() {
         {/* Inquiry terbaru — baris divide-y, tanpa kartu (SKILL.md Rule 4). */}
         <section className="mt-16">
           <div className="flex items-baseline justify-between gap-4">
-            <h2 className="text-2xl font-bold tracking-tighter text-zinc-100 md:text-3xl">
+            <h2 className="text-h3 font-semibold text-zinc-100">
               Recent inquiries
             </h2>
             <ButtonLink

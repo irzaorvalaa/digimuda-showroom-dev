@@ -29,7 +29,7 @@ export default function FeaturedStock({ cars, error }: FeaturedStockProps) {
       <div className="mx-auto max-w-[1400px]">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="text-4xl font-bold tracking-tighter text-zinc-900 md:text-5xl">
+            <h2 className="text-h1 font-semibold text-[var(--text-primary)]">
               Currently on the floor
             </h2>
             <div className="mt-4 flex items-center gap-3">

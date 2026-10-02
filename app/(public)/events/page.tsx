@@ -89,7 +89,7 @@ export default function EventsPage() {
             <p className="text-sm font-medium uppercase tracking-widest text-amber-800">
               Events
             </p>
-            <h1 className="mt-4 max-w-[18ch] text-4xl font-bold leading-none tracking-tighter text-zinc-900 md:text-6xl">
+            <h1 className="mt-4 max-w-[18ch] text-display font-semibold leading-none text-zinc-900">
               We keep the doors open on weekends.
             </h1>
             <p className="mt-6 max-w-[58ch] text-base leading-relaxed text-zinc-600 md:text-lg">
@@ -119,9 +119,7 @@ export default function EventsPage() {
 
         {/* Daftar event — baris divide-y, tanggal font-mono di kiri */}
         <div className="mt-20">
-          <h2 className="text-3xl font-bold tracking-tighter text-zinc-900 md:text-4xl">
-            Upcoming
-          </h2>
+          <h2 className="text-h3 font-semibold text-zinc-900">Upcoming</h2>
 
           <StaggerGrid className="mt-8 grid-cols-1 gap-0">
             {upcoming.map((event) => (
@@ -175,9 +173,7 @@ export default function EventsPage() {
         </div>
 
         <div className="mt-20">
-          <h2 className="text-3xl font-bold tracking-tighter text-zinc-900 md:text-4xl">
-            Recently
-          </h2>
+          <h2 className="text-h3 font-semibold text-zinc-900">Recently</h2>
 
           <div className="mt-8 divide-y divide-stone-200/60 border-t border-b border-stone-200/60">
             {past.map((event) => (
@@ -191,7 +187,9 @@ export default function EventsPage() {
                 <p className="text-base font-medium tracking-tight text-zinc-900">
                   {event.title}
                 </p>
-                <p className="text-sm text-zinc-600 md:ml-auto">{event.seats}</p>
+                <p className="text-sm text-zinc-600 md:ml-auto">
+                  {event.seats}
+                </p>
               </div>
             ))}
           </div>

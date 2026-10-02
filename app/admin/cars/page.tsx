@@ -33,7 +33,7 @@ export default async function AdminCarsPage() {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-sm font-medium text-amber-500">Inventory</p>
-            <h1 className="mt-2 text-4xl font-bold tracking-tighter text-zinc-100 md:text-6xl">
+            <h1 className="mt-2 text-h1 font-semibold text-zinc-100">
               Manage cars
             </h1>
             <p className="mt-3 font-mono text-sm text-zinc-500">

@@ -5,24 +5,137 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Art Gallery Mode: cream hangat konstan, tanpa skema gelap.
-   Aksen emas hanya lewat class Tailwind (amber-500/600/800) sesuai palet. */
+/* ============================================================
+   SEMANTIC TOKENS (SKILL.md §12)
+   Sumber tunggal warna tema — JANGAN hardcode hex di JSX.
+   Tailwind v3/v4-agnostic: dipakai via bg-[var(--token)].
+   ============================================================ */
+:root {
+  /* Surfaces */
+  --surface-base: #f6f3ed; /* halaman utama (cream) */
+  --surface-elevated: #ffffff; /* kartu, panel */
+  --surface-sunken: #ebe6dc; /* inset, well, form background */
+  --surface-inverse: #18181b; /* navbar, dark section */
+  --surface-inverse-deep: #161412; /* footer — tanah hangat lebih gelap */
+
+  /* Text */
+  --text-primary: #18181b; /* heading, body utama */
+  --text-secondary: #52525b; /* body sekunder */
+  --text-muted: #a1a1aa; /* label, caption, DeepSeek */
+  --text-inverse: #fafaf9; /* teks di atas surface-inverse */
+  --text-accent: #92400e; /* amber-800 untuk teks kecil di cream */
+  --text-accent-lg: #d97706; /* amber-600 untuk display di putih */
+
+  /* Borders */
+  --border-subtle: rgba(120, 113, 108, 0.15); /* stone-500 @ 15% */
+  --border-default: rgba(120, 113, 108, 0.25);
+  --border-accent: rgba(245, 158, 11, 0.4); /* amber-500 @ 40% */
+
+  /* Accent (Amber/Gold) */
+  --accent: #f59e0b; /* amber-500 */
+  --accent-hover: #d97706; /* amber-600 */
+  --accent-soft: rgba(245, 158, 11, 0.1);
+
+  /* State */
+  --state-success: #10b981; /* emerald-500 */
+  --state-warning: #f59e0b; /* amber-500 */
+  --state-danger: #dc2626; /* red-600 */
+  --state-info: #3b82f6; /* blue-500 (sparingly) */
+
+  /* Radius scale */
+  --radius-sm: 0.5rem; /* 8px - tombol kecil, badge */
+  --radius-md: 1rem; /* 16px - input */
+  --radius-lg: 1.5rem; /* 24px - panel */
+  --radius-xl: 2rem; /* 32px - kartu */
+  --radius-2xl: 2.5rem; /* 40px - kartu utama */
+  --radius-pill: 9999px; /* tombol pil, badge */
+
+  /* Fluid typography scale (SKILL.md §11) */
+  --text-display: clamp(3rem, 8vw, 7rem); /* Hero utama */
+  --text-h1: clamp(2.25rem, 5vw, 4rem); /* Section H1 */
+  --text-h2: clamp(1.75rem, 3.5vw, 2.5rem); /* Section H2 */
+  --text-h3: clamp(1.25rem, 2vw, 1.5rem); /* Card title besar */
+  --text-body: clamp(0.9375rem, 1vw, 1rem); /* Body */
+  --text-caption: clamp(0.6875rem, 0.8vw, 0.75rem); /* Eyebrow, label */
+
+  /* Motion durations (SKILL.md §15) */
+  --motion-instant: 100ms;
+  --motion-quick: 200ms;
+  --motion-standard: 350ms;
+  --motion-slow: 600ms;
+  --motion-cinematic: 1200ms;
+}
+
+/* Art Gallery Mode: cream hangat konstan, tanpa skema gelap. */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: #f6f3ed;
-  color: #18181b;
+  background-color: var(--surface-base);
+  color: var(--text-primary);
 }
 
-/* Diffusion shadow standar kartu — dipakai via class shadow-diffusion */
+/* ============================================================
+   DEPTH SYSTEM (SKILL.md §13) — 5 level elevasi
+   Level 0: flat (border saja) · Level 1: raised · Level 2: floating
+   Level 3: modal · Level 4: overlay (dipakai sebagai class Tailwind).
+   ============================================================ */
+@utility shadow-flat {
+  box-shadow: none;
+}
+
+@utility shadow-raised {
+  box-shadow: 0 1px 2px rgba(120, 113, 108, 0.06);
+}
+
+/* Diffusion shadow — tint hangat (bukan hitam murni) agar terasa premium. */
 @utility shadow-diffusion {
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 20px 40px -15px rgba(120, 113, 108, 0.12);
+}
+
+@utility shadow-modal {
+  box-shadow: 0 40px 80px -20px rgba(24, 24, 27, 0.18);
+}
+
+/* ============================================================
+   FLUID TYPOGRAPHY UTILITIES (SKILL.md §11)
+   Dipakai sebagai ganti fixed size untuk display/heading.
+   ============================================================ */
+@utility text-display {
+  font-size: var(--text-display);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+@utility text-h1 {
+  font-size: var(--text-h1);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+@utility text-h2 {
+  font-size: var(--text-h2);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+@utility text-h3 {
+  font-size: var(--text-h3);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+@utility text-body-fluid {
+  font-size: var(--text-body);
+}
+
+@utility text-caption {
+  font-size: var(--text-caption);
 }
 
 /* Skeleton Shimmer (SKILL.md §8): sapuan cahaya bergerak memakai transform
-   saja → 60fps dan tanpa JS/React re-render, aman untuk perpetual motion. */
+   saja -> 60fps dan tanpa JS/React re-render, aman untuk perpetual motion. */
 @keyframes shimmer {
   from {
     transform: translateX(-100%);
@@ -36,18 +149,9 @@ body {
   animation: shimmer 1.6s linear infinite;
 }
 
-/* Utilitas tipografi premium: headline seimbang & angka tabular agar
-   kolom harga/metrik lurus sempurna (kesan katalog galeri). */
-@utility text-balance {
-  text-wrap: balance;
-}
-
-@utility tabular-nums {
-  font-variant-numeric: tabular-nums;
-}
-
 /* Keyframes "float" perpetual — transform/opacity saja (60fps), dipakai
-   untuk micro-interaction kalibrasi pada elemen dekoratif. */
+   untuk micro-interaction kalibrasi pada elemen dekoratif. Interval >= 2s
+   sesuai SKILL.md §15 (perpetual animation). */
 @keyframes float {
   0%,
   100% {
@@ -62,8 +166,27 @@ body {
   animation: float 6s ease-in-out infinite;
 }
 
+/* ============================================================
+   AMBIENT DETAIL (SKILL.md §14)
+   Grain & vignette statis — pointer-events-none, di belakang konten.
+   ============================================================ */
+@utility vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(24, 24, 27, 0.15) 100%
+  );
+}
+
+/* ============================================================
+   SAFE AREA (SKILL.md §16) untuk iOS home indicator.
+   ============================================================ */
+@utility pb-safe {
+  padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+}
+
 /* Aksesibilitas: hentikan animasi perpetual untuk pengguna yang meminta
-   pengurangan gerak (mendukung target Accessibility ≥ 95). Hanya menarget
+   pengurangan gerak (mendukung target Accessibility >= 95). Hanya menarget
    animasi CSS milik kita, bukan Framer Motion (yang sudah menangani
    prefers-reduced-motion sendiri), agar tidak saling menimpa. */
 @media (prefers-reduced-motion: reduce) {

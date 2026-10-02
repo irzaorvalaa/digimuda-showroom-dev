@@ -52,6 +52,20 @@
 **Verifikasi:** `tsc --noEmit` exit 0 · `eslint` exit 0 · `next build` exit 0
 Route admin semuanya dynamic (ƒ): `/admin`, `/admin/cars`, `/admin/cars/new`, `/admin/cars/[id]/edit`, `/admin/inquiries`, `/admin/brands`, `/admin/brands/[id]/edit`
 
+**Hero variants: 3 varian + switcher — selesai.**
+
+- `components/sections/hero/` — pecah hero jadi 3 varian + switcher pitching:
+  - `hero-split.tsx` — varian default (dipindah dari `hero-section.tsx` lama), fluid typography `clamp(2.5rem,6vw,6rem)`, grain overlay, stagger lebih halus.
+  - `hero-image.tsx` — editorial parallax (7/5 asimetris), parallax hanya saat `pointer: fine` + motion normal.
+  - `hero-video.tsx` — cinematic fullscreen video, poster fallback untuk mobile (< 768px), slow network, dan `prefers-reduced-motion`; mute toggle; scroll indicator.
+  - `hero-switcher.tsx` — Client Component, baca `?hero=video|image|split` (via `useSearchParams`) lalu fallback ke `NEXT_PUBLIC_HERO_VARIANT` (default `split`); varian tak valid → `split`.
+  - `index.ts` — export + `getHeroVariant()`.
+- `app/(public)/page.tsx` — import diganti ke `HeroSwitcher`; `components/sections/hero-section.tsx` lama dihapus.
+- `.env.local` + `.env.example` — tambah `NEXT_PUBLIC_HERO_VARIANT=split`.
+- `public/videos/` — `.gitkeep` + `README.md` (spesifikasi media). Placeholder `hero-car.mp4` & `hero-poster.jpg` menyusul.
+
+**Verifikasi:** `tsc --noEmit` exit 0 · `eslint` exit 0 · `next build` exit 0 (lihat Next Step di bawah).
+
 **Berikutnya:** Batch F — multi-language (EN + ID) + toggle navbar, atau Batch I — finalisasi + deploy.
 
 ---
@@ -247,3 +261,4 @@ Kirim ke model (Cline / DeepSeek):
 | 2026-09-30 | Batch E       | (belum) | social-dock + concierge-button + dipasang di layout  |
 | 2026-09-30 | Batch G       | (belum) | auth admin: login form + callback + proxy guard      |
 | 2026-10-01 | Batch H       | (belum) | admin dashboard + CRUD cars/brands/inquiries + roles |
+| 2026-10-02 | Hero variants | (belum) | 3 varian hero (split/image/video) + switcher         |

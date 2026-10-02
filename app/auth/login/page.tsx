@@ -28,7 +28,7 @@ export default async function LoginPage() {
             Est. MMXXIV · Jakarta
           </p>
 
-          <h1 className="mt-10 text-4xl font-bold leading-none tracking-tighter text-zinc-100 md:text-5xl">
+          <h1 className="mt-10 text-h1 font-semibold leading-none text-zinc-100">
             Staff access.
           </h1>
           <p className="mt-6 max-w-[45ch] text-base leading-relaxed text-zinc-400">

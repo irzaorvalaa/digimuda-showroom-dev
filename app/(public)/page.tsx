@@ -1,6 +1,8 @@
-import HeroSection from "@/components/sections/hero-section";
+import { HeroImage } from "@/components/sections/hero";
 import FeaturedStock from "@/components/sections/featured-stock";
 import ProcessSection from "@/components/sections/process-section";
+import TrustSignals from "@/components/sections/trust-signals";
+import WhyDigimuda from "@/components/sections/why-digimuda";
 import CtaSection from "@/components/sections/cta-section";
 import { getFeaturedCars, getAvailableCount } from "@/lib/queries/cars";
 
@@ -15,9 +17,11 @@ export default async function HomePage() {
 
   return (
     <main className="min-h-[100dvh]">
-      <HeroSection availableCount={available.data} />
+      <HeroImage availableCount={available.data} />
+      <TrustSignals />
       <FeaturedStock cars={featured.data} error={featured.error} />
       <ProcessSection />
+      <WhyDigimuda />
       <CtaSection />
     </main>
   );
